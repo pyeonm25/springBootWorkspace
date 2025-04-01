@@ -1,12 +1,13 @@
 package com.basic.boot.controller;
 
+import com.basic.boot.domain.request.UserRequest;
 import com.basic.boot.domain.response.UserResponse;
 import com.basic.boot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,9 +20,14 @@ public class UserApiController {
     private final UserService userService;
 
     @GetMapping({"","/"})
-    public List<UserResponse> getAllUsers() {
+    public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<UserResponse> list = userService.findAllUser();
-        return list;
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    @PostMapping({"","/"})
+    public String addOneUser(@RequestBody UserRequest userRequest) {
+        log.info("addOneUser: request= {} 이게 들어왔다 ", userRequest);
+        return "ok";
     }
 
 }
