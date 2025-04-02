@@ -77,5 +77,11 @@ public class UserApiController {
 
     }
 
+    @DeleteMapping({"","/"})
+    public ResponseEntity<Map<String,Object>> deleteUser(@ModelAttribute UserRequest userRequest) {
+        log.trace("request = {}" , userRequest);
+        return null;
+    }
+
 
 }

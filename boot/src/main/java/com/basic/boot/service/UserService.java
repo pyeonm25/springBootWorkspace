@@ -5,6 +5,8 @@ import com.basic.boot.domain.request.UserRequest;
 import com.basic.boot.domain.response.UserResponse;
 import com.basic.boot.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class UserService {
 
     private final UserRepository userRepository;
@@ -53,6 +56,7 @@ public class UserService {
        return  userRepository.save(userRequest.toEntity());
     }
 
+    @Transactional
          //유저 네임과 페이스워드가 불일치할때 에러
     public void updateUser(UserRequest userRequest) throws Exception{
 
@@ -60,7 +64,10 @@ public class UserService {
             throw new Exception("Username or password does not exist");
         }
         UserEntity entity = userRepository.findById(userRequest.getUsername()).orElseThrow(); // 기존 entity객체
+       // log.info("Updating entity: " + entity.getEmail());
+       // log.info("Updating request: " + userRequest.getEmail());
         entity.update(userRequest); // email 만 사용자가 입력한 값으로 변경
+       // log.info("Updating entity: " + entity.getEmail());
         userRepository.save(entity); // 기존 객체 email 달라지면 jpa 자동으로 update query 날림
 
     }
