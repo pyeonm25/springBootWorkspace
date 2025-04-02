@@ -18,6 +18,10 @@ import java.util.stream.Collectors;
 public class ArticleService {
     private final ArticleRepository articleRepository;
 
+    public Article getArticleById(Long id){
+        return articleRepository.findById(id).orElse(null);
+    }
+
     public List<ArticleResponse> findAllArticle() {
         List<Article> articles = articleRepository.findAll();
 //        List<ArticleResponse> list = new ArrayList<>();
