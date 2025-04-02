@@ -1,5 +1,6 @@
 package com.my.blog.domain;
 
+import com.my.blog.controller.request.UpdateArticleRequest;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -26,4 +27,8 @@ public class Article {
         this.content = content;
     }
 
+    public void update(UpdateArticleRequest request) {
+        this.title = request.getTitle();
+        this.content = request.getContent();
+    }
 }

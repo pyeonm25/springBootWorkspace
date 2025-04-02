@@ -51,7 +51,18 @@ public class BlogApiController {
     @PutMapping("/{id}")  // id를 입력 받아서 id가 있으면 제목 내욜 수정
     public ResponseEntity updateArticle(@PathVariable Long id,
                                         @RequestBody UpdateArticleRequest request) {
-        return null;
+        log.trace("id = {} , request ={}" , id, request);
+
+        try{
+            if(request.getContent().isBlank() || request.getContent().isBlank()){
+                throw new Exception(" value is required");
+            }
+            articleService.UpdateArticle(id, request);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity("article updated successfully",HttpStatus.OK);
     }
     @DeleteMapping("/{id}")  // id를 입력 받아서 id가 있으면 삭제
     public ResponseEntity DeleteArticle(){
