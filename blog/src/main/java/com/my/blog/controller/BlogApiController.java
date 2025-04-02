@@ -54,7 +54,7 @@ public class BlogApiController {
         log.trace("id = {} , request ={}" , id, request);
 
         try{
-            if(request.getContent().isBlank() || request.getContent().isBlank()){
+            if(request.getContent().isBlank() || request.getTitle().isBlank()){
                 throw new Exception(" value is required");
             }
             articleService.UpdateArticle(id, request);
@@ -65,7 +65,13 @@ public class BlogApiController {
         return new ResponseEntity("article updated successfully",HttpStatus.OK);
     }
     @DeleteMapping("/{id}")  // id를 입력 받아서 id가 있으면 삭제
-    public ResponseEntity DeleteArticle(){
-        return null;
+    public ResponseEntity DeleteArticle(@PathVariable Long id){
+        try{
+            articleService.DeleteArticle(id);
+            return new ResponseEntity("article deleted successfully",HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 }

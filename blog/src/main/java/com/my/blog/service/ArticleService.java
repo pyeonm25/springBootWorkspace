@@ -32,6 +32,12 @@ public class ArticleService {
         );
         article.update(request);
         articleRepository.save(article);
-
+    }
+    @Transactional
+    public void DeleteArticle(Long id) throws Exception{
+        Article article = articleRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("not found id : " + id)
+        );
+        articleRepository.delete(article);
     }
 }
