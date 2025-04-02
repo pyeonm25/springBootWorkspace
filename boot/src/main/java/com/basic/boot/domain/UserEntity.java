@@ -1,5 +1,6 @@
 package com.basic.boot.domain;
 
+import com.basic.boot.domain.request.UserRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,4 +18,8 @@ public class UserEntity {
     private String password;
     @Column(unique=true , nullable=false)
     private String email;
+
+    public void update(UserRequest userRequest) {
+        this.email = userRequest.getEmail();
+    }
 }

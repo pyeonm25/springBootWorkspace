@@ -61,6 +61,18 @@ public class UserApiController {
     @PutMapping({"","/"})    // 비밀번호가 일치할때만 유저 이메일 수정
     public ResponseEntity<Map<String,Object>> updateUser(@ModelAttribute UserRequest userRequest) {
         log.trace("request = {}" , userRequest);
+        Map<String,Object> response = new HashMap<>();
+        try{
+
+            userService.updateUser(userRequest);
+            response.put("status", HttpStatus.OK.value());
+            response.put("message" ,"user updated successfully");
+
+        }catch (Exception e) {
+            response.put("status", HttpStatus.BAD_REQUEST.value());  // 201
+            response.put("message" ,e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
 
         return null;
     }

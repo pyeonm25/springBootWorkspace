@@ -53,10 +53,16 @@ public class UserService {
        return  userRepository.save(userRequest.toEntity());
     }
 
-         //유저 네임과 페이스워드가 불일치할때 에러 
-    public UserResponse updateUser(UserRequest userRequest) throws Exception{
+         //유저 네임과 페이스워드가 불일치할때 에러
+    public void updateUser(UserRequest userRequest) throws Exception{
 
-        return null;
+        if(!userRepository.existsByUsernameAndPassword(userRequest.getUsername(), userRequest.getPassword())){
+            throw new Exception("Username or password does not exist");
+        }
+        UserEntity entity = userRepository.findById(userRequest.getUsername()).orElseThrow(); // 기존 entity객체
+        entity.update(userRequest); // email 만 사용자가 입력한 값으로 변경
+        userRepository.save(entity); // 기존 객체 email 달라지면 jpa 자동으로 update query 날림
+
     }
 
 }
