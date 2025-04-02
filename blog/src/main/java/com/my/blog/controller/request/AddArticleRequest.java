@@ -10,8 +10,11 @@ public class AddArticleRequest {
     private String title;
     private String content;
 
-    // 저장은 entity
+    // db 저장은 entity
     public Article toEntity(){
-        //return new Article();
+        return Article.builder()
+                .title(title)
+                .content(content)
+                .build(); // new Article()
     }
 }
