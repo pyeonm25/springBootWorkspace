@@ -67,6 +67,7 @@ public class UserApiController {
             userService.updateUser(userRequest);
             response.put("status", HttpStatus.OK.value());
             response.put("message" ,"user updated successfully");
+            return ResponseEntity.ok(response);
 
         }catch (Exception e) {
             response.put("status", HttpStatus.BAD_REQUEST.value());  // 201
@@ -74,7 +75,6 @@ public class UserApiController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
 
-        return null;
     }
 
 
