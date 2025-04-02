@@ -30,4 +30,6 @@ public class BlogViewController {
         return "newArticle";
     }
 
+    // localhost:8082/atricle/2
+
 }
