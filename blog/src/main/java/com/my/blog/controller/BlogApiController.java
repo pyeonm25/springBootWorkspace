@@ -1,6 +1,7 @@
 package com.my.blog.controller;
 
 import com.my.blog.controller.request.AddArticleRequest;
+import com.my.blog.controller.response.ArticleResponse;
 import com.my.blog.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,8 +22,16 @@ public class BlogApiController {
 
     // 아티클 값 1개 가져오는것
     @GetMapping("/{id}")
-    public ResponseEntity getArticles(@PathVariable Long id) {
-        return null;
+    public ResponseEntity getOneArticle(@PathVariable Long id) {
+
+        try{
+            ArticleResponse response = articleService.FindById(id);
+            return new ResponseEntity(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
     @PostMapping({"","/"})
     public ResponseEntity<Map<String,Object>> addArticle(@RequestBody AddArticleRequest request) {
@@ -35,6 +44,11 @@ public class BlogApiController {
         response.put("status", HttpStatus.CREATED.value());
         response.put("message", "article save success");
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PutMapping("/{id}")  // id를 입력 받아서 id가 있으면 제목 내욜 수정
+    public ResponseEntity updateArticle(){
+        return null;
     }
 }
