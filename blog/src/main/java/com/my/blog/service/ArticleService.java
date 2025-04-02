@@ -2,6 +2,7 @@ package com.my.blog.service;
 
 import com.my.blog.controller.request.AddArticleRequest;
 import com.my.blog.controller.request.UpdateArticleRequest;
+import com.my.blog.controller.response.ArticleListResponse;
 import com.my.blog.controller.response.ArticleResponse;
 import com.my.blog.domain.Article;
 import com.my.blog.repository.ArticleRepository;
@@ -19,8 +20,17 @@ public class ArticleService {
     private final ArticleRepository articleRepository;
 
     public Article getArticleById(Long id){
-        return articleRepository.findById(id).orElse(null);
+        Article article = articleRepository.findById(id).orElseThrow(
+                ()-> new IllegalArgumentException("not found id : " + id)
+        );
+        return article;
     }
+
+    public List<ArticleListResponse> getAllArticleList(){
+        List<Article> articleList = articleRepository.findAll();
+        return articleList.stream().map(ArticleListResponse::new).collect(Collectors.toList());
+    }
+
 
     public List<ArticleResponse> findAllArticle() {
         List<Article> articles = articleRepository.findAll();

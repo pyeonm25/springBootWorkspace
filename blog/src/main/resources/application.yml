@@ -8,6 +8,7 @@ logging:
       my:
         blog:
           controller: TRACE
+    org.hibernate.SQL: DEBUG
 
 spring:
   application:
@@ -29,3 +30,10 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
    # show-sql: true
     defer-datasource-initialization: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Seoul
+
