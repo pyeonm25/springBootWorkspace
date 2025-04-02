@@ -1,17 +1,38 @@
 package com.my.blog.controller;
 
-import com.my.blog.domain.Article;
+import com.my.blog.controller.request.AddArticleRequest;
+import com.my.blog.service.ArticleService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
+@Slf4j
 @RequestMapping("/api/articles")
 @RestController   // @ResponseBody
+@RequiredArgsConstructor
 public class BlogApiController {
 
+    private final ArticleService articleService;
+
     @PostMapping({"","/"})
-    public String addArticle(@RequestBody Article article) {
-          return null;
+    public ResponseEntity<Map<String,Object>> addArticle(@RequestBody AddArticleRequest request) {
+          Map<String , Object> response = new HashMap<>();
+        if(articleService.save(request) == null){
+            response.put("status", HttpStatus.BAD_REQUEST.value());
+            response.put("message", "article save failed");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+        response.put("status", HttpStatus.CREATED.value());
+        response.put("message", "article save success");
+
+        return ResponseEntity.ok(response);
     }
 }
