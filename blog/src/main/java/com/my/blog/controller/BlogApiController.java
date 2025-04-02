@@ -1,6 +1,7 @@
 package com.my.blog.controller;
 
 import com.my.blog.controller.request.AddArticleRequest;
+import com.my.blog.controller.request.UpdateArticleRequest;
 import com.my.blog.controller.response.ArticleResponse;
 import com.my.blog.service.ArticleService;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +49,12 @@ public class BlogApiController {
     }
 
     @PutMapping("/{id}")  // id를 입력 받아서 id가 있으면 제목 내욜 수정
-    public ResponseEntity updateArticle(){
+    public ResponseEntity updateArticle(@PathVariable Long id,
+                                        @RequestBody UpdateArticleRequest request) {
+        return null;
+    }
+    @DeleteMapping("/{id}")  // id를 입력 받아서 id가 있으면 삭제
+    public ResponseEntity DeleteArticle(){
         return null;
     }
 }
