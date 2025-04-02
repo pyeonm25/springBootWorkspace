@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,10 +33,10 @@ public class UserService {
         return userList.stream().map(UserResponse::new).collect(Collectors.toList());
     }
 
-    public UserEntity findById(String username){
-        return userRepository.findById(username).orElse(null);
+    public UserResponse findUserById(String username) throws NoSuchElementException{
+        UserEntity entity = userRepository.findById(username).orElseThrow();
+        return new UserResponse(entity);
     }
-
 
     @Transactional
     public UserEntity saveUser( UserRequest userRequest) throws Exception{
@@ -46,11 +47,16 @@ public class UserService {
             throw new Exception("UserEmail already exists");
         }
 
-        if(findById(userRequest.getUsername()) != null){
+        if(userRepository.findById(userRequest.getUsername()).isPresent()){
            throw new Exception("Username already exists");
         }
        return  userRepository.save(userRequest.toEntity());
     }
 
+         //유저 네임과 페이스워드가 불일치할때 에러 
+    public UserResponse updateUser(UserRequest userRequest) throws Exception{
+
+        return null;
+    }
 
 }

@@ -26,6 +26,22 @@ public class UserApiController {
         List<UserResponse> list = userService.findAllUser();
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
+    @GetMapping("/{username}")
+    public ResponseEntity<Map<String,Object>>  getUser(@PathVariable String username) {
+        log.trace("get user: {}", username);
+        Map<String,Object> response = new HashMap<>();
+        try{
+           UserResponse user = userService.findUserById(username);
+           response.put("status", HttpStatus.OK.value());
+           response.put("data", user);
+           return ResponseEntity.ok(response);
+        }catch(Exception e){
+            response.put("status", HttpStatus.NOT_FOUND.value());  // 201
+            response.put("message" ,"user not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+
+    }
     @PostMapping({"","/"})
     public ResponseEntity<Map<String,Object>> addOneUser(@RequestBody UserRequest userRequest) {
         log.trace("addOneUser: request= {} 이게 들어왔다 ", userRequest);
@@ -42,5 +58,12 @@ public class UserApiController {
        }
 
     }
+    @PutMapping({"","/"})    // 비밀번호가 일치할때만 유저 이메일 수정
+    public ResponseEntity<Map<String,Object>> updateUser(@ModelAttribute UserRequest userRequest) {
+        log.trace("request = {}" , userRequest);
+
+        return null;
+    }
+
 
 }
