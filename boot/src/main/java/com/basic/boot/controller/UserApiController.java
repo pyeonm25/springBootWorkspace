@@ -77,11 +77,23 @@ public class UserApiController {
 
     }
 
-    // 이름이랑 비번이 일치하면 삭제
+    // 이름이랑 비번이 일치하면 삭제  => 보통은 우리가 버튼 눌러서 비동기로 삭제
     @DeleteMapping({"","/"})
-    public ResponseEntity<Map<String,Object>> deleteUser(@ModelAttribute UserRequest userRequest) {
+    public ResponseEntity<Map<String,Object>> deleteUser(@RequestBody UserRequest userRequest) {
         log.trace("request = {}" , userRequest);
-        return null;
+        Map<String,Object> response = new HashMap<>();
+        try{
+
+            userService.deleteUser(userRequest);
+            response.put("status", HttpStatus.OK.value());
+            response.put("message" ,"user deleted successfully");
+            return ResponseEntity.ok(response);
+
+        }catch (Exception e) {
+            response.put("status", HttpStatus.BAD_REQUEST.value());
+            response.put("message" ,"user deleted not successfully");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
     }
 
 

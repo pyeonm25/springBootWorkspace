@@ -71,5 +71,15 @@ public class UserService {
         userRepository.save(entity); // 기존 객체 email 달라지면 jpa 자동으로 update query 날림
 
     }
+    @Transactional
+    public void deleteUser(UserRequest userRequest) throws Exception{
+        if(!userRepository.existsByUsernameAndPassword(userRequest.getUsername(), userRequest.getPassword())){
+            throw new Exception("Username or password does not exist");
+        }
+        UserEntity entity = userRepository.findById(userRequest.getUsername()).orElseThrow(); // 기존 entity객체
+        userRepository.delete(entity);
+
+    }
+
 
 }
