@@ -8,9 +8,13 @@ logging:
       my:
         blog:
           controller: TRACE
+
 spring:
   application:
     name: blog
+
+  thymeleaf:
+    cache: false
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

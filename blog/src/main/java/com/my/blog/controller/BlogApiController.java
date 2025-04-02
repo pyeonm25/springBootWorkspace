@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -20,6 +21,12 @@ import java.util.Map;
 public class BlogApiController {
 
     private final ArticleService articleService;
+
+    @GetMapping({"","/"})
+    public ResponseEntity<List<ArticleResponse>> getAllArticles() {
+        List<ArticleResponse> list = articleService.findAllArticle();
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     // 아티클 값 1개 가져오는것
     @GetMapping("/{id}")

@@ -15,7 +15,9 @@ public class TestController {
     public String example(Model model) {
 
         Person person = new Person(1L, "개똥이",10, List.of("영화","요리"));
+        model.addAttribute("hello" ,"hello-world");
         model.addAttribute("person", person);
+
         return "test/example";  // temeples/ 파일이름 .html
     }
 

@@ -9,11 +9,28 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor  // 생성자 주입  => new ArticleRepository()
 @Transactional(readOnly = true)
 public class ArticleService {
     private final ArticleRepository articleRepository;
+
+    public List<ArticleResponse> findAllArticle() {
+        List<Article> articles = articleRepository.findAll();
+//        List<ArticleResponse> list = new ArrayList<>();
+//        for (Article article : articles) {
+//            list.add(new ArticleResponse(article));
+//        }
+//        return list;
+//        return articles.stream().map((article)-> new ArticleResponse(article))
+//                .collect(Collectors.toList());
+        return articles.stream().map(ArticleResponse::new)
+                .collect(Collectors.toList());
+
+    }
 
     @Transactional
     public Article save(AddArticleRequest request) {
