@@ -77,6 +77,7 @@ public class UserApiController {
 
     }
 
+    // 이름이랑 비번이 일치하면 삭제
     @DeleteMapping({"","/"})
     public ResponseEntity<Map<String,Object>> deleteUser(@ModelAttribute UserRequest userRequest) {
         log.trace("request = {}" , userRequest);
