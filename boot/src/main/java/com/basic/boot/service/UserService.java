@@ -4,6 +4,7 @@ import com.basic.boot.domain.UserEntity;
 import com.basic.boot.domain.request.UserRequest;
 import com.basic.boot.domain.response.UserResponse;
 import com.basic.boot.repository.UserRepository;
+import com.basic.boot.repository.UserSummary;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
@@ -79,6 +80,10 @@ public class UserService {
         UserEntity entity = userRepository.findById(userRequest.getUsername()).orElseThrow(); // 기존 entity객체
         userRepository.delete(entity);
 
+    }
+
+    public List<UserSummary> findAllUserSummary(){
+        return null;
     }
 
 
