@@ -86,5 +86,8 @@ public class UserService {
         return userRepository.findBy();
     }
 
+    public UserSummary findUserSummaryById(String username) throws NoSuchElementException{
+        return userRepository.findByUsername(username);
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.basic.boot.domain;
 
 import com.basic.boot.domain.request.UserRequest;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,6 +21,8 @@ public class UserEntity {
     private String password;
     @Column(unique=true , nullable=false)
     private String email;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserAuthenticateEntity> userAuthenticates;
 

@@ -17,4 +17,7 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
     //유저 table 유저인증 table join => 유저 객체안에 있는 list 이름 넣어주면 끝
     @EntityGraph( attributePaths = {"userAuthenticates"})
     List<UserSummary> findBy();
+
+    @EntityGraph(attributePaths = "userAuthenticates")
+    UserSummary findByUsername(String username);
 }

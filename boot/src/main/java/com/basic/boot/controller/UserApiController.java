@@ -102,4 +102,9 @@ public class UserApiController {
         return userService.findAllUserSummary();
     }
 
+    @GetMapping("/auth/{username}")
+    public UserSummary getUserSummary(@PathVariable String username){
+        return userService.findUserSummaryById(username);
+    }
+
 }
