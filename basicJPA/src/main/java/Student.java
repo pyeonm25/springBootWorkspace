@@ -9,7 +9,7 @@ import lombok.ToString;
 @Table(name="students")
 @Getter
 @Setter
-@ToString(exclude = "major")
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,11 +21,11 @@ public class Student {
     // 다대일 => 학생은 하나의 전공 , 전공은 여러학생
     @ManyToOne(fetch = FetchType.LAZY)  // 관계 구성    FetchType.EAGER(기본값): 즉시로딩 : 연관되어있는 모든 테이블 다 가져오기
     @JoinColumn(name="major_id")// 테이블 컬럼의 fk 명
-    private Major major;
+    private Major major;  // marjor_id = 1
 
     // 일대일
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn( unique = true )  // 이름 안주면 클래스이름_id 로 생성됨
+    @JoinColumn( name="locker_id", unique = true )  // 이름 안주면 클래스이름_id 로 생성됨
     private Locker locker;  // locker_id 1를 누가 참조하고 있으면 다른 Student lock_id 1를 참조 불가
 
     public Student(String name, String grade) {
