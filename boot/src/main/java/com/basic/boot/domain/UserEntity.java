@@ -4,6 +4,8 @@ import com.basic.boot.domain.request.UserRequest;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name="users")
 @Getter
@@ -18,6 +20,8 @@ public class UserEntity {
     private String password;
     @Column(unique=true , nullable=false)
     private String email;
+    @OneToMany(mappedBy = "user")
+    private List<UserAuthenticateEntity> userAuthenticates;
 
     public void update(UserRequest userRequest) {
         this.email = userRequest.getEmail();

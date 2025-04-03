@@ -8,8 +8,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Table(name="majors")
-//@ToString(exclude = "students")  // 항상 연관관계가 있는 필드는 toStirng에서 제외를 시켜줘야한다 : toString 무한루프 뜸
-@ToString
+@ToString(exclude = "students")  
+// 항상 연관관계가 있는 필드는 toStirng에서 제외를 시켜줘야한다 : 서로 참조해서 무한 참조 루프
 public class Major {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
