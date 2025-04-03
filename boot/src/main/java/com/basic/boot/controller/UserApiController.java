@@ -2,6 +2,7 @@ package com.basic.boot.controller;
 
 import com.basic.boot.domain.request.UserRequest;
 import com.basic.boot.domain.response.UserResponse;
+import com.basic.boot.repository.UserSummary;
 import com.basic.boot.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -96,5 +97,9 @@ public class UserApiController {
         }
     }
 
+    @GetMapping("/summary")
+    public List<UserSummary> getUserList(){
+        return userService.findAllUserSummary();
+    }
 
 }

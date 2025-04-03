@@ -83,7 +83,7 @@ public class UserService {
     }
 
     public List<UserSummary> findAllUserSummary(){
-        return null;
+        return userRepository.findBy();
     }
 
 
