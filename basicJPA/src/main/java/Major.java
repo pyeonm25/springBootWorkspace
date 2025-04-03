@@ -18,6 +18,7 @@ public class Major {
     private String category;
 
     // 관계형 데이터베이스 mysql 에서는 생성이 안된다
+    //학생은 하나의 전공, 전공은 여러학생을 가지고 있다
     @OneToMany(mappedBy = "major") // 연관관계 주인은 Student table의 major 프로퍼티라는 의미
     private List<Student> students = new ArrayList<>();  // 읽기전용
 
