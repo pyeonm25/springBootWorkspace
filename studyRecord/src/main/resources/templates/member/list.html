@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: header}">
+<body>
+
+<div>
+    <div th:replace="~{fragments/bodyHeader :: bodyHeader}"/></div>
+</div>
+<br>
+<div>
+    <div >아이디</div>
+    <div>이름</div>
+    <div>권한</div>
+    <div>회원삭제1</div>
+    <div>회원삭제2</div>
+</div>
+<th:block th:each="member :${list}">
+    <div >
+        <div th:text="${member.getLoginId()}">admin</div>
+        <div th:text="${member.getName()}" >관리자</div>
+        <div th:text="${member.getRole()}">ADMIN</div>
+        <!-- member/keyId=${member.getId()}-->
+        <div ><a class ="mybtn" th:href="@{/member/{keyId}(keyId=${member.getId()})}">삭제1</a></div>
+        <div ><button th:onclick="|deleteMember(${member.getId()})|">삭제2</button></div>
+    </div>
+</th:block>
+<div th:replace="~{fragments/footer :: footer}"> </div>
+</body>
+</html>
+
+<script defer src="/js/member.js"> </script>
