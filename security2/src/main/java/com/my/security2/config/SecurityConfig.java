@@ -1,5 +1,6 @@
 package com.my.security2.config;
 
+import com.my.security2.jwt.JWTUtil;
 import com.my.security2.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
+    private final JWTUtil jwtUtil;
     private final AuthenticationConfiguration authenticationConfiguration; // authenticationManager
 
     // 우리의 인증객체를 관리하는 매니저 객체
@@ -53,7 +54,7 @@ public class SecurityConfig {
 
 // 필터 등록  : addFilterAt => 기존 필터 대신에 우리 필터로 대체
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)),
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil),
                         UsernamePasswordAuthenticationFilter.class);
 
 
