@@ -18,6 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserEntity user = userRepository.findByUsername(username);
         if(user != null){
+            // userDetails 에 담아서 리턴하면 AuthenticManager 가 검증함
             return new CustomUserDetails(user);
         }
         return null;
