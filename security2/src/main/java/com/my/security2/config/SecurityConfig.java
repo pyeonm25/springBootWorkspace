@@ -1,5 +1,6 @@
 package com.my.security2.config;
 
+import com.my.security2.jwt.JWTFilter;
 import com.my.security2.jwt.JWTUtil;
 import com.my.security2.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -47,10 +48,14 @@ public class SecurityConfig {
 
         http
                 .authorizeHttpRequests((auth)-> auth
-                                .requestMatchers("/","/join","/login").permitAll() // 모든 권한사용자 이용가능 URL
+                                .requestMatchers("/","/join","/login", "/auth").permitAll() // 모든 권한사용자 이용가능 URL
                                 .requestMatchers("/admin/**").hasRole("ADMIN") // admin 권한 사용자만 이용가능 url
                                 .requestMatchers("/myPage/**").hasAnyRole("ADMIN","USER") // admin , user 일때만 이 myPage 및 하위페이지 접근가능
                                 .anyRequest().authenticated()); // 다른 모든 url 다 권한 검증 거처야함
+
+        // JWT Filter 실행하는데 LoginFilter 실행 전
+        http
+                .addFilterBefore(new JWTFilter(jwtUtil) , LoginFilter.class);
 
 // 필터 등록  : addFilterAt => 기존 필터 대신에 우리 필터로 대체
         http

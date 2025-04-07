@@ -47,20 +47,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
     // 로그인 성공시에 실행하는 메서드 -> jwt 발행
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
       log.info("successful Authentication " );
       // Authentication 인증객체 -> Principal객체 안에 -> UserDetils 객체 안에
-        CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
         String username = customUserDetails.getUsername();
-        Collection<? extends GrantedAuthority> authorities = customUserDetails.getAuthorities();
+        Collection<? extends GrantedAuthority> authorities =authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
-        GrantedAuthority grantedAuthority = iterator.next();
-        String role = grantedAuthority.toString();
-
-        String token = jwtUtil.createJwt(username,role , 60*60*10L);
+        GrantedAuthority auth = iterator.next();
+        String role = auth.getAuthority(); // ROLE_USER , ROLE_ADMIN
+        log.info("role : {} " , role );
+        String token = jwtUtil.createJwt(username,role , 60*60*1000L); // 1시간
         log.info("token : {}", token);
         // Bearer 한칸 띄어쓰기 필수~~!!!! 
-        // 응답해더에 Authorization 키:  Bearer :JWT 토큰 스트링(값) 
+        // 응답해더에 Authorization 키:  Bearer :JWT 토큰 스트링(값)
         response.addHeader("Authorization", "Bearer "+token);
 
 

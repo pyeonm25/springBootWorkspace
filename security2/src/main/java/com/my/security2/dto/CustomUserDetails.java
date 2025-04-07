@@ -2,12 +2,13 @@ package com.my.security2.dto;
 
 import com.my.security2.domain.UserEntity;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
+@Slf4j
 @RequiredArgsConstructor
 public class CustomUserDetails implements UserDetails {
     private final UserEntity userEntity;
@@ -22,6 +23,8 @@ public class CustomUserDetails implements UserDetails {
                 return userEntity.getRole();
             }
         } );
+
+
         return authorities;
     }
 
