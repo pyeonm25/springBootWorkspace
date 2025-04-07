@@ -33,7 +33,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
        // authenticationManager값 전달
         // UsernamePasswordAuthenticationToken => dto 객체
         UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, password , null);
-        log.trace("attemptAuthentication authToken = : {}", authToken);
+        log.info("attemptAuthentication authToken = : {}", authToken);
 
        // 우리가 담은 token authenticationManager 전달
         return authenticationManager.authenticate(authToken);
@@ -41,13 +41,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     // 로그인 성공시에 실행하는 메서드 -> jwt 발행
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-      log.trace("successfulAuthentication " );
-        return;
+      log.info("successful Authentication " );
+
     }
    // 로그인 실패시 실행하는 메서드
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        log.trace("unsuccessfulAuthentication " );
-       return;
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);  // 401 에러 코드 발생
+        log.info("unsuccessful Authentication " );
+
     }
 }
