@@ -15,8 +15,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable);  // csrf 비활성화
         http
-                .authorizeHttpRequests((auth)->
-                        auth.requestMatchers("/").permitAll());
+                .authorizeHttpRequests((auth)-> auth
+                                .requestMatchers("/").permitAll() // 모든 권한사용자 이용가능 URL
+                                .requestMatchers("/admin").hasRole("ADMIN") // admin 권한 사용자만 이용가능 url
+                                .anyRequest().authenticated()); // 다른 모든 url 다 권한 검증 거처야함
         return http.build();
     }
 }
