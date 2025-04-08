@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   servlet:
     encoding:
       force-response: true
@@ -8,18 +8,23 @@ server:
 
 logging:
   level:
-    com.my.security3: trace
+    com.my.studyRecord: trace
     org.springframework.security: debug
 
+
 spring:
-  profiles:
-    include: secret
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/studyRecordDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: 1234
 
   thymeleaf:
     prefix: classpath:/templates/
-    cache: false
+    cache: false # 개발할때는 수정하고 브라우저 새로고침해도 반영 안되는거 해결해주기
 
   jpa:
+    show-sql: true
     database-platform: org.hibernate.dialect.MySQL8Dialect
     database: mysql
     hibernate:
@@ -32,4 +37,3 @@ spring:
           time_zone: Asia/Seoul
         format_sql: true
         use_sql_comments: true
-
