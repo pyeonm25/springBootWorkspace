@@ -11,16 +11,9 @@ logging:
     com.my.security3: trace
     org.springframework.security: debug
 
-
 spring:
   profiles:
     include: secret
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/oauthDB?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    username: root
-    password: 1234
 
   thymeleaf:
     prefix: classpath:/templates/
