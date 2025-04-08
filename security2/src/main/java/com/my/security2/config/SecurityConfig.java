@@ -57,6 +57,7 @@ public class SecurityConfig {
         http
                 .addFilterBefore(new JWTFilter(jwtUtil) , LoginFilter.class);
 
+
 // 필터 등록  : addFilterAt => 기존 필터 대신에 우리 필터로 대체
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration),jwtUtil),
