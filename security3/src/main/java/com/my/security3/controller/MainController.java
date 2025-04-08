@@ -11,4 +11,9 @@ public class MainController {
     public @ResponseBody String mainPage(){
         return "main page";
     }
+
+    @GetMapping("/login")
+    public String loginPage(){
+        return "login";
+    }
 }

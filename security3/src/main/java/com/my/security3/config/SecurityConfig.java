@@ -1,5 +1,6 @@
 package com.my.security3.config;
 
+import com.my.security3.oauth2.CustomClientRegistrationRepo;
 import com.my.security3.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -16,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomClientRegistrationRepo customClientRegistrationRepo;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
@@ -34,13 +36,15 @@ public class SecurityConfig {
         // 우리가 직접 만든 cusomOAuth2UserService 등록
         http
                 .oauth2Login((oauth2) -> oauth2
+                        .loginPage("/login")
+                        .clientRegistrationRepository(customClientRegistrationRepo.clientRegistrationRepository())
                         .userInfoEndpoint((userInfoEndpointConfig ->
                                     userInfoEndpointConfig.userService(customOAuth2UserService)
                                 ))
                 );
         http
                 .authorizeHttpRequests((auth)->auth
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/" , "/oauth2/**" ,"/login").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();
