@@ -1,6 +1,7 @@
 package com.my.security3.dto;
 
 import lombok.RequiredArgsConstructor;
+import com. my. security3.dto.OAuth2Response;
 
 import java.util.Map;
 
